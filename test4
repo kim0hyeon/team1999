@@ -1,0 +1,84 @@
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.List;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+import javax.swing.*;
+import java.awt.*;
+
+public class Test {
+	public static void main(String[] args) throws ParseException {
+		
+		String name = JOptionPane.showInputDialog("듣고 싶은 곡의 제목을 입력해주세요!");
+		String URL = "https://www.google.com/search?q="+name+"+lyrics";
+		Document doc;
+
+		try {
+			doc = Jsoup.connect(URL).get();
+			doc.select("br").append("\n");
+			doc.outputSettings().prettyPrint(false);
+			
+			
+			new Test2(doc);
+			
+			
+			Elements lyrics = doc.select(".ujudUb");
+			
+			List<String> ly = lyrics.eachText();
+			
+			for (int i = 0; i < ly.size(); i++)
+				JOptionPane.showMessageDialog(null,(ly.get(i)));
+			
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+}
+
+
+
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.List;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+import javax.swing.*;
+import java.awt.*;
+
+public class Test2 extends JFrame{
+
+	Document doc;
+	
+	public Test2(Document d) {
+		
+		Container cp = getContentPane();
+		cp.setLayout(new GridLayout(2,1));
+		
+		doc = d;
+		Elements information = doc.select(".rVusze");
+		
+		List<String> inf = information.eachText();
+		JLabel l1 = new JLabel(inf.get(0));
+		
+		JLabel l2 = new JLabel(inf.get(1));
+		
+		Elements img = doc.select(".kAOS0");
+		JPanel p1 = new JPanel();
+		// 이미지 출력은 다음시간에
+		
+		cp.add(l2);
+		cp.add(l1);
+		
+		setTitle("Information");
+		setVisible(true);
+		setSize(150,100);
+		setLocation(160,200);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+}
