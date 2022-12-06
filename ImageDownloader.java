@@ -13,7 +13,7 @@ public class ImageDownloader {
 	
 	public static void imageDownloader() throws ParseException {
 		
-		String URL = "https://www.genie.co.kr/search/searchMain?query="+Starter.art+Starter.na;
+		String URL = "https://www.genie.co.kr/search/searchMain?query="+Starter.art+" "+Starter.na;
 		Document doc;
 		
 		try {
